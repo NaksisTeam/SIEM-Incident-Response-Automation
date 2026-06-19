@@ -1,0 +1,116 @@
+[
+  {
+    "alert_id": "ALERT-1001",
+    "timestamp": "2026-06-18T03:12:45Z",
+    "event_type": "authentication_failure",
+    "source_ip": "203.0.113.45",
+    "destination_ip": "10.0.0.12",
+    "username": "j.sharma",
+    "host": "WS-FIN-014",
+    "failure_count": 7,
+    "window_seconds": 240,
+    "raw_message": "Multiple failed login attempts detected for user j.sharma from external IP 203.0.113.45"
+  },
+  {
+    "alert_id": "ALERT-1002",
+    "timestamp": "2026-06-18T03:18:02Z",
+    "event_type": "authentication_success_after_failures",
+    "source_ip": "203.0.113.45",
+    "destination_ip": "10.0.0.12",
+    "username": "j.sharma",
+    "host": "WS-FIN-014",
+    "preceding_failures": 7,
+    "raw_message": "Successful login for j.sharma after 7 prior failures from same source IP"
+  },
+  {
+    "alert_id": "ALERT-1003",
+    "timestamp": "2026-06-18T05:44:10Z",
+    "event_type": "malware_detected",
+    "source_ip": "10.0.0.27",
+    "destination_ip": null,
+    "username": "r.verma",
+    "host": "WS-HR-009",
+    "malware_name": "Trojan.GenericKD.66533211",
+    "file_path": "C:\\Users\\r.verma\\Downloads\\invoice_update.exe",
+    "raw_message": "Endpoint AV flagged and quarantined a trojan on WS-HR-009"
+  },
+  {
+    "alert_id": "ALERT-1004",
+    "timestamp": "2026-06-18T06:02:55Z",
+    "event_type": "data_exfiltration_suspected",
+    "source_ip": "10.0.0.27",
+    "destination_ip": "198.51.100.77",
+    "username": "r.verma",
+    "host": "WS-HR-009",
+    "bytes_transferred": 734003200,
+    "destination_country": "Unknown",
+    "raw_message": "Large outbound transfer (700MB+) from WS-HR-009 to unrecognized external host"
+  },
+  {
+    "alert_id": "ALERT-1005",
+    "timestamp": "2026-06-18T07:10:33Z",
+    "event_type": "privilege_escalation",
+    "source_ip": "10.0.0.55",
+    "destination_ip": "10.0.0.55",
+    "username": "svc_backup",
+    "host": "SRV-DB-002",
+    "raw_message": "Service account svc_backup added itself to Domain Admins group"
+  },
+  {
+    "alert_id": "ALERT-1006",
+    "timestamp": "2026-06-18T08:00:00Z",
+    "event_type": "port_scan",
+    "source_ip": "192.168.1.200",
+    "destination_ip": "10.0.0.0/24",
+    "username": null,
+    "host": null,
+    "unique_ports_scanned": 45,
+    "raw_message": "Internal host scanning 45 unique ports across subnet 10.0.0.0/24"
+  },
+  {
+    "alert_id": "ALERT-1007",
+    "timestamp": "2026-06-18T09:25:17Z",
+    "event_type": "threat_intel_match",
+    "source_ip": "10.0.0.31",
+    "destination_ip": "185.220.101.45",
+    "username": "a.khan",
+    "host": "WS-DEV-022",
+    "threat_feed": "AlienVault OTX",
+    "ioc_type": "C2 Server",
+    "raw_message": "Outbound connection to known C2 IP listed on threat intel feed"
+  },
+  {
+    "alert_id": "ALERT-1008",
+    "timestamp": "2026-06-18T10:40:48Z",
+    "event_type": "suspicious_process",
+    "source_ip": "10.0.0.40",
+    "destination_ip": null,
+    "username": "p.nair",
+    "host": "WS-MKT-031",
+    "process_name": "powershell.exe",
+    "command_line": "powershell.exe -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGM=",
+    "flags": ["encoded_command", "download_string"],
+    "raw_message": "PowerShell launched with base64 encoded command and download cradle pattern"
+  },
+  {
+    "alert_id": "ALERT-1009",
+    "timestamp": "2026-06-18T11:05:09Z",
+    "event_type": "security_control_disabled",
+    "source_ip": "10.0.0.62",
+    "destination_ip": null,
+    "username": "t.singh",
+    "host": "SRV-WEB-005",
+    "control_name": "Windows Defender Real-Time Protection",
+    "raw_message": "Real-time protection was disabled via registry modification on SRV-WEB-005"
+  },
+  {
+    "alert_id": "ALERT-1010",
+    "timestamp": "2026-06-18T12:15:00Z",
+    "event_type": "generic_anomaly",
+    "source_ip": "10.0.0.18",
+    "destination_ip": "10.0.0.1",
+    "username": "n.gupta",
+    "host": "WS-OPS-007",
+    "raw_message": "Minor deviation in login time pattern detected for user n.gupta"
+  }
+]

@@ -1,0 +1,116 @@
+# =============================================================
+# SIEM Incident Response Automation - Detection & Response Rules
+# =============================================================
+# Each rule maps an alert pattern to:
+#   - severity score
+#   - classification (tactic/technique mapped loosely to MITRE ATT&CK)
+#   - automated playbook action(s) to trigger
+#
+# Severity scale: 1 (informational) -> 10 (critical)
+# =============================================================
+
+rules:
+  - id: RULE-001
+    name: "Brute Force Login Attempt"
+    match:
+      event_type: "authentication_failure"
+      threshold_count: 5
+      threshold_window_seconds: 300
+    severity: 7
+    classification: "Credential Access (MITRE T1110 - Brute Force)"
+    playbook: "block_ip_and_notify"
+
+  - id: RULE-002
+    name: "Successful Login After Multiple Failures"
+    match:
+      event_type: "authentication_success_after_failures"
+      preceding_failures_min: 3
+    severity: 8
+    classification: "Initial Access (Possible Compromised Credentials)"
+    playbook: "isolate_user_and_notify"
+
+  - id: RULE-003
+    name: "Malware Signature Detected"
+    match:
+      event_type: "malware_detected"
+    severity: 9
+    classification: "Execution (MITRE T1204 - User Execution)"
+    playbook: "isolate_host_and_notify"
+
+  - id: RULE-004
+    name: "Unusual Outbound Data Transfer"
+    match:
+      event_type: "data_exfiltration_suspected"
+      bytes_threshold: 500000000
+    severity: 9
+    classification: "Exfiltration (MITRE T1041 - Exfiltration Over C2 Channel)"
+    playbook: "block_ip_and_isolate_host"
+
+  - id: RULE-005
+    name: "Privilege Escalation Attempt"
+    match:
+      event_type: "privilege_escalation"
+    severity: 8
+    classification: "Privilege Escalation (MITRE T1068)"
+    playbook: "disable_account_and_notify"
+
+  - id: RULE-006
+    name: "Port Scan Detected"
+    match:
+      event_type: "port_scan"
+      unique_ports_threshold: 20
+    severity: 4
+    classification: "Reconnaissance (MITRE T1046 - Network Service Scanning)"
+    playbook: "log_and_notify"
+
+  - id: RULE-007
+    name: "Known Malicious IP Communication"
+    match:
+      event_type: "threat_intel_match"
+    severity: 9
+    classification: "Command and Control (MITRE T1071)"
+    playbook: "block_ip_and_notify"
+
+  - id: RULE-008
+    name: "Suspicious PowerShell Execution"
+    match:
+      event_type: "suspicious_process"
+      process_name: "powershell.exe"
+      flags: ["encoded_command", "download_string"]
+    severity: 8
+    classification: "Execution (MITRE T1059.001 - PowerShell)"
+    playbook: "isolate_host_and_notify"
+
+  - id: RULE-009
+    name: "Disabled Security Tool / EDR Tampering"
+    match:
+      event_type: "security_control_disabled"
+    severity: 9
+    classification: "Defense Evasion (MITRE T1562 - Impair Defenses)"
+    playbook: "isolate_host_and_notify"
+
+  - id: RULE-010
+    name: "Low Severity Anomaly"
+    match:
+      event_type: "generic_anomaly"
+    severity: 2
+    classification: "Informational"
+    playbook: "log_only"
+
+severity_bands:
+  critical: { min: 9, max: 10 }
+  high: { min: 7, max: 8 }
+  medium: { min: 4, max: 6 }
+  low: { min: 1, max: 3 }
+
+notification:
+  channels:
+    - type: "email"
+      enabled: true
+      recipients: ["soc-team@example.com"]
+    - type: "slack"
+      enabled: true
+      webhook_env_var: "SLACK_WEBHOOK_URL"
+  escalation:
+    critical_paging: true
+    high_paging: false
